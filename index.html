@@ -1,101 +1,15 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
-	<head>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<link rel="stylesheet" type="text/css" href="/hybrid/html/css/index.css" />
-		<!-- uni 的 SDK -->
-		<script type="text/javascript" src="https://unpkg.com/@dcloudio/uni-webview-js@0.0.3/index.js">
-		</script>
-	</head>
-
-	<body>
-		<!-- 没有画面时的遮罩 -->
-		<div id="nocamera"></div>
-		<video id="webcam" loop preload> </video>
-	</body>
-
-	<script type="text/javascript">
-		// 初始化
-		initVideo()
-		// uni.app事件
-		document.addEventListener('UniAppJSBridgeReady', function() {
-			console.log('----')
-		});
-		// 摄像头初始化
-		function initVideo() {
-			let that = this;
-			this.video = document.getElementById("webcam");
-			console.log(window.screen)
-			// 如果要全屏就让宽高都是等于屏幕高度
-			this.videoWidth = window.screen.width
-			this.videoHeight = window.screen.height
-
-			setTimeout(() => {
-				if (
-					navigator.mediaDevices.getUserMedia ||
-					navigator.getUserMedia ||
-					navigator.webkitGetUserMedia ||
-					navigator.mozGetUserMedia
-				) {
-					//调用用户媒体设备, 访问摄像头
-					this.getUserMedia({
-							video: {
-								width: {
-									ideal: that.videoWidth,
-									max: that.videoWidth
-								},
-								height: {
-									ideal: that.videoHeight,
-									max: that.videoHeight
-								},
-								// facingMode: 'user', //前置摄像头
-								facingMode: { exact: "environment" }, //后置摄像头
-								// frameRate: {
-								// 	ideal: 30,
-								// 	min: 10
-								// }
-							}
-						},
-						this.videoSuccess,
-						this.videoError
-					);
-				} else {}
-			}, 300);
-		}
-
-		// 获取用户设备
-		function getUserMedia(constraints, success, error) {
-			if (navigator.mediaDevices.getUserMedia) {
-				//最新的标准API
-				navigator.mediaDevices
-					.getUserMedia(constraints)
-					.then(success)
-					.catch(error);
-			} else if (navigator.webkitGetUserMedia) {
-				//webkit核心浏览器
-				navigator.webkitGetUserMedia(constraints, success, error);
-			} else if (navigator.mozGetUserMedia) {
-				//firfox浏览器
-				navigator.mozGetUserMedia(constraints, success, error);
-			} else if (navigator.getUserMedia) {
-				//旧版API
-				navigator.getUserMedia(constraints, success, error);
-			}
-		}
-
-		// 开始有画面
-		function videoSuccess(stream) {
-			this.mediaStreamTrack = stream;
-			this.video.srcObject = stream;
-			this.video.play();
-		}
-
-		function videoError(error) {
-			console.log('摄像头获取错误')
-			 document.getElementById("nocamera").style.display='block'
-		}
-	</script>
-
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite + Vue</title>
+    <script type="module" crossorigin src="/assets/index-6210e623.js"></script>
+    <link rel="stylesheet" href="/assets/index-6c335060.css">
+  </head>
+  <body>
+    <div id="app"></div>
+    
+  </body>
 </html>
